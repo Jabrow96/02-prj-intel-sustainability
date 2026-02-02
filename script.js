@@ -61,4 +61,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Improve discoverability: let wheel events on the container element itself be captured even when not focused
   timeline.setAttribute('tabindex', '0');
+
+  // Tap/click toggle for small screens / touch devices
+  const isTouchOrSmall = () => ('ontouchstart' in window) || window.matchMedia('(max-width:480px)').matches;
+  const milestoneCards = document.querySelectorAll('.milestone-card');
+
+  const toggleCard = (e) => {
+    if (!isTouchOrSmall()) return;
+    const card = e.currentTarget;
+    // ignore clicks on links or buttons inside the card
+    if (e.target && e.target.closest && e.target.closest('a, button')) return;
+
+    const wasOpen = card.classList.contains('open');
+    // close all then open the clicked one (only one open at a time)
+    milestoneCards.forEach(c => c.classList.remove('open'));
+    if (!wasOpen) card.classList.add('open');
+  };
+
+  milestoneCards.forEach(card => {
+    card.addEventListener('click', toggleCard);
+    // allow Enter / Space to toggle when focused
+    card.addEventListener('keydown', (e) => {
+      if ((e.key === 'Enter' || e.key === ' ') && isTouchOrSmall()) {
+        e.preventDefault();
+        toggleCard({ currentTarget: card, target: e.target });
+      }
+    });
+  });
+
+  // Close open card when tapping outside
+  document.addEventListener('click', (e) => {
+    if (!isTouchOrSmall()) return;
+    if (!e.target.closest('.milestone-card')) {
+      milestoneCards.forEach(c => c.classList.remove('open'));
+    }
+  });
 });

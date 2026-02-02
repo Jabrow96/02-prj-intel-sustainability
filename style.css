@@ -141,7 +141,64 @@ body{
   .milestone{flex:1 1 auto}
   .milestone-card{display:block}
   .milestone-img{height:220px;object-fit:contain}
-  .milestone-more{position:relative;transform:none;background:transparent;color:var(--muted);padding:0;margin-top:.5rem}
+  /* On small screens keep the blue background so details remain clearly visible */
+  .milestone-more{
+    position:relative;
+    transform:none;
+    background:linear-gradient(180deg, var(--intel-blue-700), var(--intel-blue));
+    color:#fff;
+    padding:.75rem 1rem;
+    margin-top:.5rem;
+    border-radius:8px;
+    max-height:none;
+    opacity:1;
+  }
+}
+
+/* Responsive tweaks */
+
+/* Tablets and small laptops */
+@media (max-width:768px){
+  .hero{padding:2rem 1rem}
+  .hero-inner{gap:1rem;align-items:flex-start}
+  .logo{width:140px}
+  .hero-title{font-size:1.9rem}
+  .hero-sub{font-size:1rem}
+
+  .timeline{padding-left:clamp(1rem, 6vw, 3rem);padding-right:clamp(1rem, 6vw, 3rem);gap:.9rem}
+  .milestone{flex:0 0 280px}
+  .milestone-img{height:190px}
+  .milestone-card{padding:.9rem}
+  .milestone-title{font-size:1rem}
+}
+
+/* Small phones */
+@media (max-width:480px){
+  .hero{padding:1.25rem .75rem}
+  .logo{width:200px; align-self:center}
+  .hero-title{font-size:1.15rem;text-align: center}
+  .hero-sub{font-size:.95rem;max-width:100%;text-align: center}
+
+  .timeline{padding-left:1rem;padding-right:1rem;gap:.75rem}
+  .milestone{flex:1 1 auto}
+  .milestone-card{padding:.6rem;border-radius:10px}
+  .milestone-img{height:160px}
+  .milestone-title{font-size:.98rem}
+  /* On very small screens keep details hidden until user taps the card */
+  .milestone-more{
+    background:linear-gradient(180deg, var(--intel-blue-700), var(--intel-blue));
+    color:#fff;
+    padding:0 1rem;
+    margin-top:.5rem;
+    border-radius:8px;
+    max-height:0;
+    opacity:0;
+    overflow:hidden;
+    transition:max-height .28s ease, opacity .18s ease, padding .18s ease;
+  }
+  .milestone-card.open .milestone-more{padding:.75rem 1rem;max-height:220px;opacity:1}
+  .milestone-card.open .milestone-summary{opacity:0;transform:translateY(-6px);margin:0;max-height:0;padding:0}
+  body > p{font-size:.95rem;padding:.75rem;}
 }
 
 /* Minor helpers */
