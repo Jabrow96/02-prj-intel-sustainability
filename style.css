@@ -1,1 +1,112 @@
-/* Add your CSS here */
+/* Intel-inspired color system */
+:root{
+  --intel-blue:#0071c5;
+  --intel-blue-700:#005fa3;
+  --bg-start:#eaf6ff;
+  --card-bg:#ffffff;
+  --muted:#5b708a;
+  --text:#0b1a2b;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;
+  color:var(--text);
+  background:linear-gradient(180deg, var(--bg-start), #ffffff 60%);
+  -webkit-font-smoothing:antialiased;
+}
+
+/* --- HERO --- */
+.hero{
+  background: linear-gradient(135deg,var(--intel-blue),var(--intel-blue-700));
+  color:#fff;
+  padding:3rem 1rem;
+}
+.hero-inner{
+  max-width:1100px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  gap:2rem;
+}
+.logo{width:140px;height:auto;flex:0 0 auto}
+.hero-copy{flex:1}
+.hero-title{
+  margin:0 0 .5rem 0;
+  font-size:2.4rem;
+  line-height:1.05;
+  font-weight:700;
+  text-shadow:0 2px 6px rgba(2,20,43,0.2);
+}
+.hero-sub{
+  margin:0;
+  color:rgba(255,255,255,0.95);
+  max-width:720px;
+  font-size:1.05rem;
+}
+
+/* --- TIMELINE --- */
+.timeline{
+  display:flex;
+  gap:1rem;
+  padding:2rem 1rem;
+  overflow-x:auto;
+  scroll-behavior:smooth;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+.milestone{scroll-snap-align:start;flex:0 0 300px}
+.milestone-card{
+  background:var(--card-bg);
+  border-radius:12px;
+  padding:1rem;
+  box-shadow:0 6px 20px rgba(8,29,52,0.08);
+  border:1px solid rgba(11,26,43,0.06);
+  transition:transform .18s ease, box-shadow .18s ease;
+  position:relative;
+  overflow:hidden;
+}
+.milestone-card:focus{outline:3px solid rgba(0,113,197,0.18);}
+.milestone-card:hover{transform:translateY(-6px);box-shadow:0 12px 28px rgba(8,29,52,0.12)}
+.milestone-img{width:100%;height:150px;object-fit:cover;border-radius:8px}
+.milestone-year{color:var(--intel-blue);font-weight:700;margin-bottom:.35rem}
+.milestone-title{margin:.15rem 0 .65rem 0;font-size:1.05rem}
+.milestone-summary{margin:0 0 .5rem 0;color:var(--muted);font-size:.95rem}
+
+/* Hidden overlay details that reveal on hover/focus */
+.milestone-more{
+  position:absolute;
+  left:0;right:0;bottom:0;
+  background:linear-gradient(180deg, rgba(255,255,255,0), rgba(2,20,43,0.85));
+  color:#fff;
+  padding:1rem;
+  transform:translateY(100%);
+  transition:transform .25s ease;
+  pointer-events:none;
+}
+.milestone-card:hover .milestone-more,
+.milestone-card:focus .milestone-more,
+.milestone-card:focus-within .milestone-more{transform:translateY(0);pointer-events:auto}
+.milestone-more p{margin:0;font-size:.95rem}
+
+/* Small screen: stack vertically */
+@media (max-width:700px){
+  .hero-inner{flex-direction:column;align-items:flex-start}
+  .logo{width:110px;margin-bottom:.5rem}
+  .hero-title{font-size:1.6rem}
+
+  .timeline{flex-direction:column;overflow-x:visible;padding:1rem}
+  .milestone{flex:1 1 auto}
+  .milestone-card{display:block}
+  .milestone-img{height:200px}
+  .milestone-more{position:relative;transform:none;background:transparent;color:var(--muted);padding:0;margin-top:.5rem}
+}
+
+/* Minor helpers */
+p{line-height:1.5}
+
+/* Last note on page */
+body > p{padding:1rem;text-align:center;color:var(--muted);margin:0 0 2rem 0}
+
